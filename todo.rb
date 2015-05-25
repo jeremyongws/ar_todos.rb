@@ -20,8 +20,10 @@ class Console
       complete(@description)
     when "list"
       list
-    when "list2"
-      list2
+    when "completed"
+      list_completed
+    when "incomplete"
+      list_not_completed
     end
   end
 
@@ -60,14 +62,21 @@ class Console
     end
   end
 
-  def self.list2
+  def self.list_completed
     Task.all.each_with_index do |item, index|
       if item.status == "Completed"
         mark = "[X]"
-      else
-        mark = "[ ]"
-      end
       puts "#{mark} #{item.id}, #{index + 1}. #{item.taskname}"
+      end
+    end
+  end
+  
+  def self.list_not_completed
+    Task.all.each_with_index do |item, index|
+      if item.status == "Not Completed"
+        mark = "[ ]"
+        puts "#{mark} #{index + 1}. #{item.taskname}"
+      end
     end
   end
 end
